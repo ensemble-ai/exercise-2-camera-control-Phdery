@@ -1,56 +1,49 @@
 class_name FollowCamera2
 extends CameraControllerBase
 
-@export var lead_speed: float = target_speed + 20
+# Stage 4
+@export var lead_speed: float = 25.0
+@export var catchup_speed: float = 40.0
 @export var catchup_delay_duration: float = 0.5
-@export var catchup_speed: float = 10.0
-@export var leash_distance: float = 5.0
-
-var time_since_last_movement: float = 0.0
-var target_lead_position: Vector3 = Vector3.ZERO
-var input_direction: Vector3 = Vector3.ZERO
+@export var leash_distance: float = 7.5
+var stop_timer: float = 0.0
 
 func _ready() -> void:
 	super()
-	current = true
-	is_autoscroll_enabled = false
-	target_lead_position = target.global_position
-	set_process(true)
+	current = false
+	position = target.position
 
 func _process(delta: float) -> void:
-	if not target:
+	if not current:
 		return
-	
-	var target_position = target.global_position
-	var camera_position = global_position
 
-	# 获取输入方向
-	input_direction = Vector3.ZERO
-	input_direction.x = Input.get_axis("ui_left", "ui_right")
-	input_direction.z = Input.get_axis("ui_up", "ui_down")
-	if input_direction.length() > 0:
-		input_direction = input_direction.normalized()
-
-	# 检测vessel是否在移动
-	var target_velocity = target.get_velocity()
-	var is_moving = target_velocity.length() > 0
-
-	if is_moving:
-		time_since_last_movement = 0.0
-		# 根据输入更新相机前进位置
-		target_lead_position = target_position + input_direction * leash_distance
-		global_position = global_position.lerp(target_lead_position, lead_speed * delta)
-	else:
-		time_since_last_movement += delta
-		if time_since_last_movement >= catchup_delay_duration:
-			# 使用lerp方法平滑移动回vessel位置
-			global_position = global_position.lerp(target_position, catchup_speed * delta)
-	
-	if draw_camera_logic and current:
+	if draw_camera and current:
 		_draw_center_cross_2()
-	
+
+	var target_pos = target.global_position
+	var camera_pos = global_position
+
+	if target.velocity.length() > 0:
+		# Reset the stop timer when the target is moving
+		stop_timer = 0.0
+
+		# The desired camera position ahead of the target
+		var direction = target.velocity.normalized()
+		var desired_position = target_pos + direction * leash_distance
+
+		# Smoothly move the camera towards the desired position
+		global_position = global_position.lerp(desired_position, lead_speed * delta)
+	else:
+		# Increment the stop timer when the target is stationary
+		stop_timer += delta
+
+		# After the delay, move the camera towards the target
+		if stop_timer >= catchup_delay_duration and camera_pos != target_pos:
+			global_position = global_position.lerp(target_pos, catchup_speed * delta)
+
 	super(delta)
 
+# Draw the white cross line in this stage
 func _draw_center_cross_2() -> void:
 	var mesh_instance := MeshInstance3D.new()
 	var immediate_mesh := ImmediateMesh.new()
@@ -103,7 +96,7 @@ func _draw_center_cross_2() -> void:
 	immediate_mesh.surface_end()
 
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.albedo_color = Color.BLACK
+	material.albedo_color = Color.WHITE
 	
 	add_child(mesh_instance)
 	mesh_instance.global_transform = Transform3D.IDENTITY

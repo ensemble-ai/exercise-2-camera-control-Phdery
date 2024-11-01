@@ -16,7 +16,7 @@ func _process(delta: float) -> void:
 	if !current:
 		return
 	
-	if draw_camera_logic:
+	if draw_camera and current:
 		draw_logic()
 	
 	var tpos = target.global_position

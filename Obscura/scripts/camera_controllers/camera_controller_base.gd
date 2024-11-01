@@ -8,6 +8,7 @@ extends Camera3D
 @export var min_zoom:float = 5.0
 @export var max_zoom:float = 100.0
 @export var draw_camera_logic:bool = true
+@export var draw_camera:bool = true
 @export var vessel_path:NodePath
 @export var is_autoscroll_enabled: bool = false
 @export var target_speed:float
@@ -30,6 +31,7 @@ func _process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("fire1"):
 		draw_camera_logic = !draw_camera_logic
+		draw_camera = !draw_camera
 	if Input.is_action_pressed("zoom_in"):
 		dist_above_target = clampf(dist_above_target - zoom_speed * delta, min_zoom, max_zoom)
 	if Input.is_action_pressed("zoom_out"):

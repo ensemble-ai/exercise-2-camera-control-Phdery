@@ -1,40 +1,41 @@
 class_name CenterCamera
 extends CameraControllerBase
 
+# Stage 1
 func _ready() -> void:
 	super()
-	current = false
+	
+	# Set the center camera as the default camera
+	current = true
 	is_autoscroll_enabled = false
 	position = target.position
-	#position = Vector3(0, 10, 0)
 	set_process(true)
 	
 
 func _process(delta: float) -> void:
-	
 	if !current:
 		return
-	if target:
-		# Always center the camera on the vessel
-		global_position = Vector3(target.global_position.x, global_position.y, target.global_position.z)
+		
+	if draw_camera:
 		_draw_center_cross_center()
-
-	# Draw the cross in the center of the screen if draw_camera_logic is enabled
-	#if draw_camera_logic:
+		
+	if target:
+		# Center the camera on the vessel
+		global_position = Vector3(target.global_position.x, global_position.y, target.global_position.z)
 	
 	super(delta)
 
+# Draw the white cross line in this stage
 func _draw_center_cross_center() -> void:
 	var mesh_instance := MeshInstance3D.new()
 	var immediate_mesh := ImmediateMesh.new()
 	var material := ORMMaterial3D.new()
 	
-	immediate_mesh.clear_surfaces()
 	mesh_instance.mesh = immediate_mesh
 	mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	
-	var left:float = -10 / 2 + 0.28
-	var right:float = 10 / 2 + 0.30
+	var left:float = -10 / 2
+	var right:float = 10 / 2
 	var top:float = 0.01
 	var bottom:float = -0.01
 	
@@ -54,8 +55,8 @@ func _draw_center_cross_center() -> void:
 	immediate_mesh.surface_end()
 	
 	
-	var left_v:float = 0.28
-	var right_v:float = 0.30
+	var left_v:float = 0
+	var right_v:float = 0
 	var top_v:float = 5
 	var bottom_v:float = -5
 	
@@ -81,6 +82,6 @@ func _draw_center_cross_center() -> void:
 	mesh_instance.global_transform = Transform3D.IDENTITY
 	mesh_instance.global_position = Vector3(global_position.x, target.global_position.y, global_position.z)
 	
-	#mesh is freed after one update of _process
+	# Mesh is freed after one update of _process
 	await get_tree().process_frame
 	mesh_instance.queue_free()

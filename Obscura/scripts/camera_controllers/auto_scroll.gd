@@ -1,7 +1,7 @@
 class_name AutoScroll
 extends CameraControllerBase
 
-
+# Stage 2
 @export var top_left: Vector2
 @export var bottom_right: Vector2
 @export var autoscroll_speed: Vector3 = Vector3(20, 0, 0)
@@ -15,7 +15,6 @@ func _ready() -> void:
 	is_autoscroll_enabled = true
 	current = false
 	position = target.position
-	#position = Vector3(0, 10, 0)
 	set_process(true)
 
 func _process(delta: float) -> void:
@@ -23,13 +22,15 @@ func _process(delta: float) -> void:
 	if current:
 		global_transform.origin.x += autoscroll_speed.x * delta
 		global_transform.origin.z += autoscroll_speed.z * delta
+	
+	# Draw the frame box in this stage, not the cross line
 	_draw_frame_box()
-		
+	
+	# Apply push to the right to avoid getting stuck
 	var frame_left = top_left.x + global_transform.origin.x - 13
 	if target.position.x <= frame_left:
-	# Apply push to the right to avoid getting stuck
 		target.global_position.x += autoscroll_speed.x * delta
-			
+	
 	#boundary checks
 	var tpos = target.global_position
 	var cpos = global_position
