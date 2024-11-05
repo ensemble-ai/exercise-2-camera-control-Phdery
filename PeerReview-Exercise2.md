@@ -1,7 +1,7 @@
 # Code Review for Programming Exercise 2 #
 ## Description ##
 
-For this assignment, you will be giving feedback on the completeness of Exercise 1.  To do so, we will be giving you a rubric to provide feedback on. For the feedback, please provide positive criticism and suggestions on how to fix segments of code.
+For this assignment, you will be giving feedback on the completeness of Exercise 2.  To do so, we will be giving you a rubric to provide feedback on. For the feedback, please provide positive criticism and suggestions on how to fix segments of code.
 
 You only need to review code modified or created by the student you are reviewing. You do not have to review the code and project files that were given out by the instructor.
 
@@ -132,7 +132,11 @@ Here is another example as well.
 * [These long conditional statements can be wrapped into multiple lines to improve readability, without exceeding 100 characters on a single line.](https://github.com/ensemble-ai/exercise-2-camera-control-Phdery/blob/ae46fd8efb90ce4d14e8f3f83d6dd02d3d4a8579/Obscura/scripts/camera_controllers/speed_up_camera.gd#L35)
 
 #### Style Guide Exemplars ####
+
+* Student used snake_case to name [variables](https://github.com/ensemble-ai/exercise-2-camera-control-Phdery/blob/ae46fd8efb90ce4d14e8f3f83d6dd02d3d4a8579/Obscura/scripts/camera_controllers/speed_up_camera.gd#L25), prepended underscore to [private functions](https://github.com/ensemble-ai/exercise-2-camera-control-Phdery/blob/ae46fd8efb90ce4d14e8f3f83d6dd02d3d4a8579/Obscura/scripts/camera_controllers/speed_up_camera.gd#L55), PascalCase for [new classes](https://github.com/ensemble-ai/exercise-2-camera-control-Phdery/blob/ae46fd8efb90ce4d14e8f3f83d6dd02d3d4a8579/Obscura/scripts/camera_controllers/speed_up_camera.gd#L1C1-L1C12).
+
 * [Whitespace is correctly applied around operators and commas.](https://github.com/ensemble-ai/exercise-2-camera-control-Phdery/blob/ae46fd8efb90ce4d14e8f3f83d6dd02d3d4a8579/Obscura/scripts/camera_controllers/speed_up_camera.gd#L30).
+
 * There are detailed comments in script functions, typically with [a space followed after "#" for normal comments](https://github.com/ensemble-ai/exercise-2-camera-control-Phdery/blob/ae46fd8efb90ce4d14e8f3f83d6dd02d3d4a8579/Obscura/scripts/camera_controllers/follow_camera_2.gd#L37).
 
 
@@ -156,6 +160,6 @@ This should be similar to the Code Style justification.
 * There is a minor typo on the file name of [`center_camear.gd`](https://github.com/ensemble-ai/exercise-2-camera-control-Phdery/blob/master/Obscura/scripts/camera_controllers/center_camear.gd).
 
 #### Best Practices Exemplars ####
-* All scripts are readable and easy to go over. I like how there are comments [inside of functions to describe camera logic](https://github.com/ensemble-ai/exercise-2-camera-control-Phdery/blob/ae46fd8efb90ce4d14e8f3f83d6dd02d3d4a8579/Obscura/scripts/camera_controllers/follow_camera_2.gd#L34).
+* All scripts are readable and easy to go over. I like how there are detailed comments [inside of processes to describe camera logic](https://github.com/ensemble-ai/exercise-2-camera-control-Phdery/blob/ae46fd8efb90ce4d14e8f3f83d6dd02d3d4a8579/Obscura/scripts/camera_controllers/follow_camera_2.gd#L34).
 
 * The new camera script files are well organized under the [scripts/camera_controllers](https://github.com/ensemble-ai/exercise-2-camera-control-Phdery/tree/master/Obscura/scripts/camera_controllers) which made it easy for me to find.
